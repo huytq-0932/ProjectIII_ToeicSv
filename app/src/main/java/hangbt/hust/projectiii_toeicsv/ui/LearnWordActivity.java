@@ -3,8 +3,8 @@ package hangbt.hust.projectiii_toeicsv.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,22 +13,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hangbt.hust.projectiii_toeicsv.R;
+import hangbt.hust.projectiii_toeicsv.data.model.Topic;
 import hangbt.hust.projectiii_toeicsv.data.model.Word;
 
-public class MainActivity extends AppCompatActivity {
+public class LearnWordActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
-
-    private RecyclerView recyclerViewMarkWord;
-    private WordAdapter wordAdapter = new WordAdapter();
     private List<Word> words = new ArrayList<>();
+    private RecyclerView recyclerViewWord;
+    private WordAdapter wordAdapter = new WordAdapter();
 
-    private ImageView buttonLearn, buttonTest, imageViewAccount;
+    private ImageView imageViewBack;
+    private TextView textViewTopicName;
+
+    private static final String TAG = "LearnWordActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_learn_word);
         getSupportActionBar().hide();
 
         initView();
@@ -36,38 +38,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        buttonLearn = findViewById(R.id.buttonLearn);
-        buttonLearn.setOnClickListener(view -> {
-            Intent learn = new Intent(MainActivity.this, LearnActivity.class);
-            startActivity(learn);
+        Intent intent = getIntent();
+        Topic topic = (Topic) intent.getSerializableExtra(LearnCategoryActivity.INTENT_TOPIC_WORD);
+        Log.d(TAG, "View: " + topic.getName());
+        imageViewBack = findViewById(R.id.imageViewBack);
+        textViewTopicName = findViewById(R.id.textViewTopicName);
+        imageViewBack.setOnClickListener(view -> {
+            Intent back = new Intent(LearnWordActivity.this, LearnCategoryActivity.class);
+            back.putExtra(LearnActivity.INTENT_TOPIC, topic);
+            startActivity(back);
+            finish();
         });
-        //imageViewAccount
-        imageViewAccount = findViewById(R.id.imageViewAccount);
-        imageViewAccount.setOnClickListener(view -> {
-            Intent account = new Intent(MainActivity.this, SetAccountActivity.class);
-            startActivity(account);
-        });
-        //imageTest
-        buttonTest = findViewById(R.id.buttonTest);
-        buttonTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent test = new Intent(MainActivity.this, TestActivity.class);
-                startActivity(test);
-            }
-        });
+        textViewTopicName.setText(topic.getName());
 
-        //list
-        recyclerViewMarkWord = findViewById(R.id.recycleViewMarkWord);
-        recyclerViewMarkWord.setAdapter(wordAdapter);
+        recyclerViewWord = findViewById(R.id.recycleViewWord);
+        recyclerViewWord.setAdapter(wordAdapter);
 
         wordAdapter.setListener((word, position) -> openDetail(word));
     }
 
     private void openDetail(Word word) {
-        Log.d(TAG, "openDetail: " + word.getType());
+//        Log.d(TAG, "openDetail: " + word.getType());
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.main, DetailWordFragment.newInstance(word))
+                .add(R.id.learnWord, DetailWordFragment.newInstance(word))
                 .addToBackStack(null)
                 .commit();
     }
