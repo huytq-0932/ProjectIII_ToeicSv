@@ -3,23 +3,17 @@ package hangbt.hust.projectiii_toeicsv.data.model;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
-
-@Entity(tableName = "tbl_word",
-        foreignKeys = @ForeignKey(entity = Topic.class,
-                parentColumns = "id",
-                childColumns = "topic_id"))
-public class Word implements Serializable {
+@Entity(tableName = "tbl_userword")
+public class UserWord implements Serializable {
     @PrimaryKey
     @ColumnInfo(name = "id")
     private Integer id;
     @NonNull
     @ColumnInfo(name = "origin")
     private String origin;
-    @NonNull
     @ColumnInfo(name = "explanation")
     private String explanation;
     @NonNull
@@ -27,7 +21,6 @@ public class Word implements Serializable {
     private String type;
     @ColumnInfo(name = "pronunciation")
     private String pronunciation;
-    @NonNull
     @ColumnInfo(name = "image_url")
     private String imageUrl;
     @NonNull
@@ -35,16 +28,14 @@ public class Word implements Serializable {
     private String example;
     @ColumnInfo(name = "example_translation")
     private String exampleTranslation;
-    @NonNull
     @ColumnInfo(name = "topic_id")
     private Integer topicId;
-    @NonNull
     @ColumnInfo(name = "level")
     private Integer level;
     @ColumnInfo(name = "mark")
     private Integer mark;
 
-    public Word(Integer id, @NonNull String origin, @NonNull String explanation, @NonNull String type, String pronunciation, @NonNull String imageUrl, @NonNull String example, String exampleTranslation, @NonNull Integer topicId, @NonNull Integer level, Integer mark) {
+    public UserWord(Integer id, @NonNull String origin, String explanation, @NonNull String type, String pronunciation, String imageUrl, @NonNull String example, String exampleTranslation, Integer topicId, Integer level, Integer mark) {
         this.id = id;
         this.origin = origin;
         this.explanation = explanation;
@@ -75,12 +66,11 @@ public class Word implements Serializable {
         this.origin = origin;
     }
 
-    @NonNull
     public String getExplanation() {
         return explanation;
     }
 
-    public void setExplanation(@NonNull String explanation) {
+    public void setExplanation(String explanation) {
         this.explanation = explanation;
     }
 
@@ -101,12 +91,11 @@ public class Word implements Serializable {
         this.pronunciation = pronunciation;
     }
 
-    @NonNull
     public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(@NonNull String imageUrl) {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
@@ -127,21 +116,19 @@ public class Word implements Serializable {
         this.exampleTranslation = exampleTranslation;
     }
 
-    @NonNull
     public Integer getTopicId() {
         return topicId;
     }
 
-    public void setTopicId(@NonNull Integer topicId) {
+    public void setTopicId(Integer topicId) {
         this.topicId = topicId;
     }
 
-    @NonNull
     public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(@NonNull Integer level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 
@@ -151,13 +138,5 @@ public class Word implements Serializable {
 
     public void setMark(Integer mark) {
         this.mark = mark;
-    }
-
-    @Override
-    public String toString() {
-        return "Word{" +
-                "id=" + id +
-                ", origin='" + origin + '\'' +
-                '}';
     }
 }

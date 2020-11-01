@@ -1,6 +1,8 @@
 package hangbt.hust.projectiii_toeicsv.ui;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +17,17 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 
+import java.util.Locale;
+import java.util.UUID;
+
 import hangbt.hust.projectiii_toeicsv.R;
 import hangbt.hust.projectiii_toeicsv.data.model.Word;
 
 public class DetailWordFragment extends Fragment {
 
     private static final String BUNDLE_WORD = "BUNDLE_WORD";
+    public static final String BUNDLE_POSITION = "BUNDLE_POSITION";
+    private int position;
 
     private static final String TAG = "DetailWordFragment";
 
@@ -28,12 +35,22 @@ public class DetailWordFragment extends Fragment {
     private ImageView imageSpeak, image, imageViewMark, imageViewBack;
     private ConstraintLayout detailWordFragment;
 
-    public static DetailWordFragment newInstance(Word word) {
+    private TextToSpeech textToSpeech;
+    private OnClickMarkWordListener onClickMarkWordListener;
+
+    public static DetailWordFragment newInstance(Word word, int position) {
         DetailWordFragment fragment = new DetailWordFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable(BUNDLE_WORD, word);
+        bundle.putInt(BUNDLE_POSITION, position);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        onClickMarkWordListener = (OnClickMarkWordListener) context;
     }
 
     @Override
@@ -58,15 +75,38 @@ public class DetailWordFragment extends Fragment {
         imageViewBack = view.findViewById(R.id.imageViewBack);
         detailWordFragment = view.findViewById(R.id.detailWordFragment);
 
+        Word word = (Word) getArguments().getSerializable(BUNDLE_WORD);
+        position = getArguments().getInt(BUNDLE_POSITION);
+
+        textToSpeech = new TextToSpeech(view.getContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                textToSpeech.setLanguage(Locale.ENGLISH);
+            }
+        });
+
+        imageSpeak.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String utteranceId = UUID.randomUUID().toString();
+                textToSpeech.speak(word.getOrigin(), TextToSpeech.QUEUE_FLUSH, null, utteranceId);
+            }
+        });
+
         detailWordFragment.setOnClickListener(view1 -> {
         });
         imageViewBack.setOnClickListener(view12 -> getActivity().onBackPressed());
 
-        showDetail();
+        showDetail(word, position);
     }
 
-    private void showDetail() {
-        Word word = (Word) getArguments().getSerializable(BUNDLE_WORD);
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        onClickMarkWordListener = null;
+    }
+
+    private void showDetail(Word word, int position) {
         Log.d(TAG, "showDetail: " + word);
         textViewEnglish.setText(word.getOrigin());
         textViewPronunciation.setText(word.getPronunciation());
@@ -78,8 +118,27 @@ public class DetailWordFragment extends Fragment {
         Log.d(TAG, "showDetail: " + word.getImageUrl() + " " + word.getType());
         Glide.with(this).load(word.getImageUrl()).into(image);
 
-        if (word.isMark()) {
+        if (word.getMark()==1) {
             imageViewMark.setBackgroundResource(R.drawable.ic_baseline_bookmark_24);
         }
+
+        imageViewMark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setMark(word);
+            }
+        });
+    }
+
+    public void setMark(Word word){
+        int resId = word.getMark() == 0 ? R.drawable.ic_baseline_bookmark_24 : R.drawable.ic_baseline_bookmark_border_24;
+        word.setMark(1 - word.getMark());
+        imageViewMark.setBackgroundResource(resId);
+
+        onClickMarkWordListener.onClickMark(word, position);
+    }
+
+    public interface OnClickMarkWordListener{
+        void onClickMark(Word word, int position);
     }
 }

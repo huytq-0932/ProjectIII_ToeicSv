@@ -1,8 +1,10 @@
 package hangbt.hust.projectiii_toeicsv.ui;
 
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 import hangbt.hust.projectiii_toeicsv.R;
 import hangbt.hust.projectiii_toeicsv.data.model.Word;
@@ -49,23 +53,32 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
     }
 
     public void updateItem(Word word, int position) {
-//        words.remove(position);
-//        words.add(position, word);
-//        notifyDataSetChanged();
+        words.remove(position);
+        words.add(position, word);
+        notifyDataSetChanged();
     }
 
     static class WordViewHolder extends RecyclerView.ViewHolder {
 
         private TextView textViewEnglish, textViewVietnamese, textViewPronunciation;
+        private ImageView imageSpeak;
         private View viewMark;
         private OnClickItemListener listener;
+        private TextToSpeech textToSpeech;
 
         public WordViewHolder(@NonNull View itemView, OnClickItemListener listener) {
             super(itemView);
             textViewEnglish = itemView.findViewById(R.id.textViewEnglish);
             textViewVietnamese = itemView.findViewById(R.id.textViewVietnamese);
             textViewPronunciation = itemView.findViewById(R.id.textViewPronunciation);
+            imageSpeak = itemView.findViewById(R.id.imageButton);
             viewMark = itemView.findViewById(R.id.viewMark);
+            textToSpeech = new TextToSpeech(itemView.getContext(), new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int i) {
+                    textToSpeech.setLanguage(Locale.ENGLISH);
+                }
+            });
             this.listener = listener;
         }
 
@@ -74,7 +87,15 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.WordViewHolder
             textViewPronunciation.setText(word.getPronunciation());
             textViewVietnamese.setText(word.getType());
 
-            int colorId = word.isMark() ? R.color.colorMark : R.color.colorMarkGreen;
+            imageSpeak.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String utteranceId = UUID.randomUUID().toString();
+                    textToSpeech.speak(word.getOrigin(), TextToSpeech.QUEUE_FLUSH, null, utteranceId);
+                }
+            });
+
+            int colorId = word.getMark() == 1 ? R.color.colorMark : R.color.colorMarkGreen;
             int color = ContextCompat.getColor(itemView.getContext(), colorId);
             viewMark.setBackgroundColor(color);
 

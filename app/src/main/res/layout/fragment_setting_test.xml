@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:elevation="5dp"
+    tools:context=".ui.SettingTestFragment">
+
+    <ImageView
+        android:id="@+id/imageViewBack"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_margin="4dp"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewAccount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Cài đặt bài kiểm tra"
+        android:textColor="@android:color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewBack"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewLevel"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Mức độ"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewAmount"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textViewAmount"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewBack" />
+
+    <TextView
+        android:id="@+id/textViewAmount"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Số câu"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/textViewTime"
+        app:layout_constraintStart_toStartOf="@+id/textViewTime"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLevel" />
+
+    <TextView
+        android:id="@+id/textViewTime"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:text="Thời gian trả lời 1 câu"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAmount" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="137dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewLevel"
+        app:layout_constraintStart_toEndOf="@+id/textViewLevel"
+        app:layout_constraintTop_toTopOf="@+id/textViewLevel" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="139dp"
+        android:layout_height="23dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewAmount"
+        app:layout_constraintEnd_toEndOf="@+id/spinner"
+        app:layout_constraintStart_toStartOf="@+id/spinner"
+        app:layout_constraintTop_toTopOf="@+id/textViewAmount" />
+
+    <Spinner
+        android:id="@+id/spinner3"
+        android:layout_width="133dp"
+        android:layout_height="25dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewTime"
+        app:layout_constraintEnd_toEndOf="@+id/spinner2"
+        app:layout_constraintStart_toStartOf="@+id/spinner2"
+        app:layout_constraintTop_toTopOf="@+id/textViewTime" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

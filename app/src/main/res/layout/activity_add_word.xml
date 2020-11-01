@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/account"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".ui.LearnActivity">
+
+    <ImageView
+        android:id="@+id/imageViewBack"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_margin="4dp"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewAccount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Thêm từ"
+        android:textColor="@android:color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewBack"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewEnglish"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="62dp"
+        android:text="English"
+        android:textSize="@dimen/sp_18"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewBack" />
+
+    <TextView
+        android:id="@+id/textViewVietnamese"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Tiếng Việt"
+        android:textSize="@dimen/sp_18"
+        app:layout_constraintStart_toStartOf="@+id/textViewEnglish"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEnglish" />
+
+    <TextView
+        android:id="@+id/textViewPronunciation"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Phiên âm"
+        android:textSize="@dimen/sp_18"
+        app:layout_constraintStart_toStartOf="@+id/textViewVietnamese"
+        app:layout_constraintTop_toBottomOf="@+id/textViewVietnamese" />
+
+    <TextView
+        android:id="@+id/textViewExample"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Example"
+        android:textSize="@dimen/sp_18"
+        app:layout_constraintStart_toStartOf="@+id/textViewPronunciation"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPronunciation" />
+
+    <TextView
+        android:id="@+id/textViewExampleTrans"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Nghĩa"
+        android:textSize="@dimen/sp_18"
+        app:layout_constraintStart_toStartOf="@+id/textViewExample"
+        app:layout_constraintTop_toBottomOf="@+id/textViewExample" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        android:layout_marginEnd="30dp"
+        android:text="Lưu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextExampleTrans" />
+
+    <EditText
+        android:id="@+id/editTextEnglish"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="30dp"
+        android:ems="10"
+        android:hint="English"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewEnglish"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewEnglish"
+        app:layout_constraintTop_toTopOf="@+id/textViewEnglish" />
+
+    <EditText
+        android:id="@+id/editTextVietnamese"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Tiếng Việt"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewVietnamese"
+        app:layout_constraintEnd_toEndOf="@+id/editTextEnglish"
+        app:layout_constraintStart_toStartOf="@+id/editTextEnglish"
+        app:layout_constraintTop_toTopOf="@+id/textViewVietnamese" />
+
+    <EditText
+        android:id="@+id/editTextPronunciation"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Phiên âm"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewPronunciation"
+        app:layout_constraintEnd_toEndOf="@+id/editTextVietnamese"
+        app:layout_constraintStart_toStartOf="@+id/editTextVietnamese"
+        app:layout_constraintTop_toTopOf="@+id/textViewPronunciation" />
+
+    <EditText
+        android:id="@+id/editTextExample"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Example"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewExample"
+        app:layout_constraintEnd_toEndOf="@+id/editTextPronunciation"
+        app:layout_constraintStart_toStartOf="@+id/editTextPronunciation"
+        app:layout_constraintTop_toTopOf="@+id/textViewExample" />
+
+    <EditText
+        android:id="@+id/editTextExampleTrans"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Nghĩa"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewExampleTrans"
+        app:layout_constraintEnd_toEndOf="@+id/editTextExample"
+        app:layout_constraintStart_toStartOf="@+id/editTextExample"
+        app:layout_constraintTop_toTopOf="@+id/textViewExampleTrans" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

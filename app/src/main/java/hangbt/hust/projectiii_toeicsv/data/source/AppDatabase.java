@@ -7,14 +7,16 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import hangbt.hust.projectiii_toeicsv.data.model.Topic;
+import hangbt.hust.projectiii_toeicsv.data.model.UserWord;
 import hangbt.hust.projectiii_toeicsv.data.model.Word;
 
-@Database(entities = {Topic.class, Word.class}, version = 1)
+@Database(entities = {Word.class, Topic.class, UserWord.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     private static final String DB_NAME = "toeic_600.db";
     private static AppDatabase instance;
 
     public abstract TopicDao topicDao();
+    public abstract WordDao wordDao();
 
     public static AppDatabase getInstance(Context context) {
         if (instance == null) {

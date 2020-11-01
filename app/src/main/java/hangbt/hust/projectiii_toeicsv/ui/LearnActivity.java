@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hangbt.hust.projectiii_toeicsv.R;
+import hangbt.hust.projectiii_toeicsv.data.base.BaseAsyncTask;
 import hangbt.hust.projectiii_toeicsv.data.model.Topic;
+import hangbt.hust.projectiii_toeicsv.data.source.AppDatabase;
+import hangbt.hust.projectiii_toeicsv.data.source.TopicDao;
 
 public class LearnActivity extends AppCompatActivity {
 
@@ -20,6 +23,8 @@ public class LearnActivity extends AppCompatActivity {
     private TopicAdapter topicAdapter = new TopicAdapter();
     private List<Topic> topics = new ArrayList<>();
     private ImageView imageViewBack;
+
+    private TopicDao topicDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,31 +55,25 @@ public class LearnActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        topics.add(new Topic(1, "Contracts",
-                1, "http://600tuvungtoeic.com/template/english/images/lesson/contracts.jpg",
-                "Business",
-                "#966474", ""));
-        topics.add(new Topic(2, "Computers & the Internet",
-                1, "http://600tuvungtoeic.com/template/english/images/lesson/contracts.jpg",
-                "Office",
-                "#966474", ""));
-        topics.add(new Topic(3, "Marketing",
-                1, "http://600tuvungtoeic.com/template/english/images/lesson/contracts.jpg",
-                "Personal",
-                "#966474", ""));
-        topics.add(new Topic(4, "Warranties",
-                1, "http://600tuvungtoeic.com/template/english/images/lesson/contracts.jpg",
-                "Purchasing",
-                "#966474", ""));
-        topics.add(new Topic(5, "Business Planning",
-                1, "http://600tuvungtoeic.com/template/english/images/lesson/contracts.jpg",
-                "Financing",
-                "#966474", ""));
-        topics.add(new Topic(6, "Conferences",
-                1, "http://600tuvungtoeic.com/template/english/images/lesson/contracts.jpg",
-                "Management",
-                "#966474", ""));
+        topicDao = AppDatabase.getInstance(this).topicDao();
+        new BaseAsyncTask<Void, List<Topic>>()
+                .setOnDataLoadedListener(new BaseAsyncTask.OnDataLoadedListener<List<Topic>>() {
+                    @Override
+                    public void onSuccess(List<Topic> data) {
+                        topicAdapter.updateData(data);
+                    }
 
-        topicAdapter.updateData(topics);
+                    @Override
+                    public void onFailure(Exception e) {
+
+                    }
+                })
+                .onExecute(new BaseAsyncTask.OnExecuteListener<Void, List<Topic>>() {
+                    @Override
+                    public List<Topic> onExecute(Void aVoid) {
+                        return topicDao.getCategory();
+                    }
+                })
+                .execute();
     }
 }

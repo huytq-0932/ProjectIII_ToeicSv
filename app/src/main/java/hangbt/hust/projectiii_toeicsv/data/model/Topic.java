@@ -1,5 +1,6 @@
 package hangbt.hust.projectiii_toeicsv.data.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -11,10 +12,13 @@ public class Topic implements Serializable {
     @PrimaryKey
     @ColumnInfo(name = "id")
     private Integer id;
+    @NonNull
     @ColumnInfo(name = "name")
     private String name;
+    @NonNull
     @ColumnInfo(name = "no")
     private Integer no;
+    @NonNull
     @ColumnInfo(name = "image_url")
     private String imageUrl;
     @ColumnInfo(name = "category")

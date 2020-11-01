@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/userMarkWord"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/test"
     android:background="@color/background"
     tools:context=".ui.LearnActivity">
 
@@ -18,12 +18,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewTest"
+        android:id="@+id/textViewTopicName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:text="Test"
+        android:text="Từ đã đánh dấu"
         android:textColor="@android:color/black"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -31,38 +31,18 @@
         app:layout_constraintStart_toEndOf="@+id/imageViewBack"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/buttonStart"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleViewMarkWord"
         android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="40dp"
-        android:text="Bắt đầu"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTest" />
-
-    <Button
-        android:id="@+id/buttonSetting"
-        android:layout_width="333dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="60dp"
-        android:text="Cài đặt"
-        app:layout_constraintEnd_toEndOf="@+id/buttonStart"
-        app:layout_constraintStart_toStartOf="@+id/buttonStart"
-        app:layout_constraintTop_toBottomOf="@+id/buttonStart" />
-
-    <Button
-        android:id="@+id/buttonGuide"
-        android:layout_width="333dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="60dp"
-        android:text="Hướng dẫn"
-        app:layout_constraintEnd_toEndOf="@+id/buttonSetting"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonSetting"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSetting" />
-
+        app:layout_constraintTop_toBottomOf="@+id/textViewTopicName"
+        tools:listitem="@layout/item_word" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.TestActivity"></activity>
+        <activity android:name=".ui.TakeTestActivity"></activity>
+        <activity android:name=".ui.AddWordActivity" />
+        <activity android:name=".ui.UserWordActivity" />
+        <activity android:name=".ui.UserMarkWord" />
+        <activity android:name=".ui.TestActivity" />
         <activity android:name=".ui.SetAccountActivity" />
         <activity android:name=".ui.LearnWordActivity" />
         <activity android:name=".ui.LearnCategoryActivity" />

@@ -13,7 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hangbt.hust.projectiii_toeicsv.R;
+import hangbt.hust.projectiii_toeicsv.data.base.BaseAsyncTask;
 import hangbt.hust.projectiii_toeicsv.data.model.Topic;
+import hangbt.hust.projectiii_toeicsv.data.source.AppDatabase;
+import hangbt.hust.projectiii_toeicsv.data.source.TopicDao;
 
 public class LearnCategoryActivity extends AppCompatActivity {
 
@@ -24,6 +27,8 @@ public class LearnCategoryActivity extends AppCompatActivity {
     private RecyclerView recyclerViewSubTopic;
     private SubTopicAdapter subTopicAdapter = new SubTopicAdapter();
 
+    private TopicDao topicDao;
+
     private static final String TAG = "LearnCategoryActivity";
 
     @Override
@@ -32,13 +37,14 @@ public class LearnCategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_learn_category);
         getSupportActionBar().hide();
 
-        initView();
-        initData();
-    }
-
-    private void initView() {
         Intent intent = getIntent();
         Topic topic = (Topic) intent.getSerializableExtra(LearnActivity.INTENT_TOPIC);
+
+        initView(topic);
+        initData(topic);
+    }
+
+    private void initView(Topic topic) {
         Log.d(TAG, "initView: "+ topic.getCategory());
 
         textViewTopicName = findViewById(R.id.textViewTopicName);
@@ -63,29 +69,26 @@ public class LearnCategoryActivity extends AppCompatActivity {
         });
     }
 
-    private void initData() {
+    private void initData(Topic topic) {
+        topicDao = AppDatabase.getInstance(this).topicDao();
+        new BaseAsyncTask<String, List<Topic>>()
+                .setOnDataLoadedListener(new BaseAsyncTask.OnDataLoadedListener<List<Topic>>() {
+                    @Override
+                    public void onSuccess(List<Topic> data) {
+                        subTopicAdapter.updateData(data);
+                    }
 
-        subtopics.add(new Topic(1, "Contracts",
-                1, "http://600tuvungtoeic.com/template/english/images/lesson/contracts.jpg",
-                "Business",
-                "#966474", ""));
-        subtopics.add(new Topic(3, "Marketing",
-                1, "http://600tuvungtoeic.com/template/english/images/lesson/marketing.jpg",
-                "Personal",
-                "#966474", ""));
-        subtopics.add(new Topic(4, "Warranties",
-                1, "http://600tuvungtoeic.com/template/english/images/lesson/warranties.jpg",
-                "Purchasing",
-                "#966474", ""));
-        subtopics.add(new Topic(5, "Business Planning",
-                1, "http://600tuvungtoeic.com/template/english/images/lesson/business_planning.jpg",
-                "Financing",
-                "#966474", ""));
-        subtopics.add(new Topic(6, "Conferences",
-                1, "http://600tuvungtoeic.com/template/english/images/lesson/conferences.jpg",
-                "Management",
-                "#966474", ""));
+                    @Override
+                    public void onFailure(Exception e) {
 
-        subTopicAdapter.updateData(subtopics);
+                    }
+                })
+                .onExecute(new BaseAsyncTask.OnExecuteListener<String, List<Topic>>() {
+                    @Override
+                    public List<Topic> onExecute(String s) {
+                        return topicDao.getTopicByCategory(topic.getCategory());
+                    }
+                })
+                .execute();
     }
 }
